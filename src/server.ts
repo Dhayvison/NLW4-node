@@ -1,7 +1,6 @@
 import express from 'express'
-import Text from './utils/TextColoring'
+import {success} from './utils/text-coloring'
 
 const app = express();
 
-app.listen(3333, () => console.info(Text.green('Server is running')));
-
+app.listen(3333, () => console.info(success`Server is running`));
