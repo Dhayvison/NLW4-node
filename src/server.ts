@@ -1,5 +1,5 @@
-import express from 'express'
-import {success} from './utils/text-coloring'
+import express from 'express';
+import { success } from './utils/text-coloring';
 
 const app = express();
 
