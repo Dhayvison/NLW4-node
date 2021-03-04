@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import cors from 'cors';
 import express from 'express';
 import { success } from './utils/text-coloring';
+import './database';
 
 const app = express();
 app.use(cors());
