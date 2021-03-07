@@ -1,4 +1,4 @@
-import { Api } from './utils/api';
+import { api } from './utils/api';
 import { runMigrations, dropDatabase } from './utils/database';
 
 describe('Users', () => {
@@ -15,8 +15,14 @@ describe('Users', () => {
     await dropDatabase();
   });
 
+  async function getOneUserId() {
+    const usersResponse = await api.get('/users');
+    const { id } = usersResponse.body.users.pop();
+    return id;
+  }
+
   it('Register a new valid user', async () => {
-    const { status, body } = await Api.post('/users').send(userExample);
+    const { status, body } = await api.post('/users').send(userExample);
 
     expect(status).toBe(201);
     expect(body.error).toBe('');
@@ -27,7 +33,7 @@ describe('Users', () => {
   });
 
   it('Not create a user with the same email', async () => {
-    const { status, body } = await Api.post('/users').send(userExample);
+    const { status, body } = await api.post('/users').send(userExample);
 
     expect(status).toBe(409);
     expect(body.error).not.toBe('');
@@ -35,7 +41,7 @@ describe('Users', () => {
   });
 
   it('Read all users', async () => {
-    const { status, body } = await Api.get('/users');
+    const { status, body } = await api.get('/users');
 
     expect(status).toBe(200);
     expect(body.error).toBe('');
@@ -44,9 +50,8 @@ describe('Users', () => {
   });
 
   it('Read the user by id', async () => {
-    const usersResponse = await Api.get('/users');
-    const { id } = usersResponse.body.users.pop();
-    const { status, body } = await Api.get(`/users/${id}`);
+    const id = await getOneUserId();
+    const { status, body } = await api.get(`/users/${id}`);
 
     expect(status).toBe(200);
     expect(body.error).toBe('');
@@ -57,7 +62,7 @@ describe('Users', () => {
   });
 
   it('Return error to a non valid user id', async () => {
-    const { status, body } = await Api.get(`/users/0`);
+    const { status, body } = await api.get(`/users/0`);
 
     expect(status).toBe(404);
     expect(body.error).not.toBe('');
@@ -65,9 +70,8 @@ describe('Users', () => {
   });
 
   it('Update user name and email', async () => {
-    const usersResponse = await Api.get('/users');
-    const { id } = usersResponse.body.users.pop();
-    const { status, body } = await Api.put(`/users/${id}`).send({
+    const id = await getOneUserId();
+    const { status, body } = await api.put(`/users/${id}`).send({
       name: `${userExample.name} Updated`,
       email: `${userExample.email}.update`,
     });
