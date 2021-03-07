@@ -1,5 +1,5 @@
 import { api } from './utils/api';
-import { dropDatabase, runMigrations } from './utils/database';
+import { runMigrations, truncate } from './utils/database';
 
 describe('Surveys', () => {
   const surveyExample = {
@@ -12,7 +12,7 @@ describe('Surveys', () => {
   });
 
   afterAll(async () => {
-    await dropDatabase();
+    await truncate('Survey');
   });
 
   async function getOneSurveyId() {

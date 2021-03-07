@@ -1,5 +1,5 @@
 import { api } from './utils/api';
-import { runMigrations, dropDatabase } from './utils/database';
+import { runMigrations, truncate } from './utils/database';
 
 describe('Users', () => {
   const userExample = {
@@ -12,7 +12,7 @@ describe('Users', () => {
   });
 
   afterAll(async () => {
-    await dropDatabase();
+    await truncate('User');
   });
 
   async function getOneUserId() {
