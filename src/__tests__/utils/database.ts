@@ -12,3 +12,11 @@ export async function dropDatabase() {
   }
   return await (await database).dropDatabase();
 }
+
+export async function truncate(entityName: string) {
+  const entities = (await database).entityMetadatas;
+  const entity = entities.find(ent => ent.name === entityName);
+
+  const repository = (await database).getRepository(entityName);
+  await repository.query(`DELETE FROM ${entity.tableName};`);
+}
