@@ -22,10 +22,18 @@ class SendMailController {
       });
     }
 
+    const baseUrl = request.protocol + '://' + request.get('host');
+
     const info = await SendMailService.send(
       survey.survey.title,
       user.user.email,
-      survey.survey.description,
+      'NPSMail',
+      {
+        name: user.user.name,
+        title: survey.survey.title,
+        description: survey.survey.description,
+        urlToAnswers: `${baseUrl}/answer/${surveyId}/${userId}`,
+      },
     );
 
     const result = await SurveysUsersService.create(userId, surveyId);
