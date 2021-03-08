@@ -1,0 +1,65 @@
+<style>
+  #container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #options {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .grade {
+    width: 20px;
+    height: 20px;
+    padding: 15px;
+    background-color: #8257E6;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 20px;
+  }
+
+  #options-label {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+</style>
+
+<div id="container">
+  <h1>Olá, {{name}}!</h1>
+  <h2>{{title}}</h2>
+  <br />
+  <h3>{{description}}</h3>
+
+  <div id="options-label">
+    <span>Pouco provável</span>
+    <span>Muito provável</span>
+  </div>
+
+  <div id="options">
+    <a class="grade" href="">0</a>
+    <a class="grade" href="">1</a>
+    <a class="grade" href="">2</a>
+    <a class="grade" href="">3</a>
+    <a class="grade" href="">4</a>
+    <a class="grade" href="">5</a>
+    <a class="grade" href="">6</a>
+    <a class="grade" href="">7</a>
+    <a class="grade" href="">8</a>
+    <a class="grade" href="">9</a>
+    <a class="grade" href="">10</a>
+  </div>
+
+  <br />
+  <br />
+  <strong>🙂 Obrigado! Sua opinião é muito importante para nós.</strong>
+  <h3>Nome da empresa</h3>
+</div>
