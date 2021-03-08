@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { SendMailService } from '../services/SendMailService';
 import { SurveyService } from '../services/SurveyService';
 import { SurveysUsersService } from '../services/SurveysUsersService';
 import { UserService } from '../services/UserService';
@@ -20,6 +21,12 @@ class SendMailController {
         error: survey.error,
       });
     }
+
+    const info = await SendMailService.send(
+      survey.survey.title,
+      user.user.email,
+      survey.survey.description,
+    );
 
     const result = await SurveysUsersService.create(userId, surveyId);
     if (result.error) {
