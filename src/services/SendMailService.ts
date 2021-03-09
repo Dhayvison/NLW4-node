@@ -45,9 +45,7 @@ class SendMailService {
       html: html,
     });
 
-    console.log(nodemailer.getTestMessageUrl(info));
-
-    return info;
+    return { mailInfo: info, urlPreview: nodemailer.getTestMessageUrl(info) };
   }
 }
 
