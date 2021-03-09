@@ -8,6 +8,16 @@ class SendMailController {
   async sendMail(request: Request, response: Response) {
     const { userId, surveyId } = request.body;
 
+    const hasBeenSent = await SurveysUsersService.alreadyExists(
+      userId,
+      surveyId,
+    );
+    if (hasBeenSent.error) {
+      return response.status(400).json({
+        error: hasBeenSent.error,
+      });
+    }
+
     const user = await UserService.read(userId);
     if (user.error) {
       return response.status(404).json({
@@ -42,7 +52,7 @@ class SendMailController {
         error: result.error,
       });
     } else {
-      return response.status(201).json(result);
+      return response.status(201).json({ ...result, info });
     }
   }
 }
