@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import { SendMailController } from './controllers/SendMailController';
 import { SurveyController } from './controllers/SurveyController';
+import { SurveyUserController } from './controllers/SurveyUserController';
 import { UserController } from './controllers/UserController';
 
 const router = Router();
 
 const userController = new UserController();
 const surveyController = new SurveyController();
-const sendMailController = new SendMailController();
+const sendSurveyController = new SurveyUserController();
 
 router.post('/users', userController.create);
 router.get('/users/:id?', userController.read);
@@ -19,6 +19,6 @@ router.get('/survey/:id?', surveyController.read);
 router.put('/survey/:id', surveyController.update);
 router.delete('/survey/:id', surveyController.delete);
 
-router.post('/sendMail', sendMailController.sendMail);
+router.post('/send-survey', sendSurveyController.sendSurvey);
 
 export { router };

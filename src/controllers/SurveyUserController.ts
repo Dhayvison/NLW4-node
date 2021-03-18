@@ -4,19 +4,14 @@ import { SurveyService } from '../services/SurveyService';
 import { SurveysUsersService } from '../services/SurveysUsersService';
 import { UserService } from '../services/UserService';
 
-class SendMailController {
-  async sendMail(request: Request, response: Response) {
+class SurveyUserController {
+  async sendSurvey(request: Request, response: Response) {
     const { userId, surveyId } = request.body;
 
-    const hasBeenSent = await SurveysUsersService.alreadyExists(
+    const surveyUser = await SurveysUsersService.getSurveyToSend(
       userId,
       surveyId,
     );
-    if (hasBeenSent.error) {
-      return response.status(400).json({
-        error: hasBeenSent.error,
-      });
-    }
 
     const user = await UserService.read(userId);
     if (user.error) {
@@ -42,19 +37,18 @@ class SendMailController {
         name: user.user.name,
         title: survey.survey.title,
         description: survey.survey.description,
-        urlToAnswers: `${baseUrl}/answer/${surveyId}/${userId}`,
+        urlToAnswers: `${baseUrl}/answer/${surveyUser.id}`,
       },
     );
 
-    const result = await SurveysUsersService.create(userId, surveyId);
-    if (result.error) {
+    if (info.mailInfo.rejected.length) {
       return response.status(409).json({
-        error: result.error,
+        error: info.mailInfo.response,
       });
     } else {
-      return response.status(201).json({ ...result, info });
+      return response.status(201).json({ ...surveyUser, info });
     }
   }
 }
 
-export { SendMailController };
+export { SurveyUserController };
