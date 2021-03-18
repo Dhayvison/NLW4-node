@@ -13,6 +13,12 @@ class SurveyUserController {
       surveyId,
     );
 
+    if (surveyUser.value !== null) {
+      return response.status(409).json({
+        error: 'This survey has already been answered',
+      });
+    }
+
     const user = await UserService.read(userId);
     if (user.error) {
       return response.status(404).json({
@@ -47,6 +53,22 @@ class SurveyUserController {
       });
     } else {
       return response.status(201).json({ ...surveyUser, info });
+    }
+  }
+
+  async answer(request: Request, response: Response) {
+    const { surveyId, grade } = request.params;
+
+    const surveyToAnswer = await SurveysUsersService.update(surveyId, {
+      grade,
+    });
+
+    if (surveyToAnswer.error) {
+      return response.status(404).json({
+        error: surveyToAnswer.error,
+      });
+    } else {
+      return response.json(surveyToAnswer);
     }
   }
 }

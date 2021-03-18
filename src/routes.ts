@@ -20,5 +20,6 @@ router.put('/survey/:id', surveyController.update);
 router.delete('/survey/:id', surveyController.delete);
 
 router.post('/send-survey', sendSurveyController.sendSurvey);
+router.get('/answer/:surveyId/:grade', sendSurveyController.answer);
 
 export { router };
