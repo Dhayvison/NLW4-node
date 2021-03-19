@@ -11,7 +11,7 @@ export default (async () => {
         database: './src/database/database.test.sqlite',
       }),
       ...(isProdEnv && {
-        database: './dist/src/database/database.test.sqlite',
+        database: './dist/src/database/database.sqlite',
         entities: ['./dist/src/models/**.js'],
         migrations: ['./dist/src/database/migrations/**.js'],
         cli: {
@@ -20,10 +20,6 @@ export default (async () => {
       }),
     }),
   );
-
-  if (isProdEnv) {
-    await database.runMigrations();
-  }
 
   return database;
 })();
