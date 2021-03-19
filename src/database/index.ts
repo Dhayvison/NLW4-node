@@ -21,5 +21,9 @@ export default (async () => {
     }),
   );
 
+  if (isProdEnv) {
+    await database.runMigrations();
+  }
+
   return database;
 })();
