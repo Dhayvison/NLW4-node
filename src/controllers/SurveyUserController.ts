@@ -13,7 +13,7 @@ class SurveyUserController {
       surveyId,
     );
 
-    if (surveyUser.value !== null) {
+    if (surveyUser.value) {
       return response.status(409).json({
         error: 'This survey has already been answered',
       });
